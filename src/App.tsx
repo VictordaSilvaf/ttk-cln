@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ChevronLeftIcon, EllipsisIcon, ShoppingCartIcon, type LucideIcon } from "lucide-react"
+import { ChevronLeftIcon, EllipsisIcon, ShoppingCartIcon, Sparkles, type LucideIcon } from "lucide-react"
 import ShareIcon from "@/assets/images/compartilhar.png"
 import Image1 from "@/assets/images/iphone16-preto.webp"
 import Image2 from "@/assets/images/iphone16-rosa.webp"
@@ -61,7 +61,39 @@ const product: ProductProps = {
   }
 };
 
+const product2: ProductProps = {
+  title: "Nintendo Switch 2 – A Nova Geração da Diversão",
+  description:
+    "O novo Nintendo Switch 2 chegou com tudo! Gráficos aprimorados, desempenho turbo e uma experiência híbrida ainda mais fluida. Jogue onde quiser, com quem quiser, sem limites — agora com tela OLED 4K, Joy-Cons redesenhados e bateria de longa duração.",
+  descriptionImage: "https://example.com/nintendo-switch-2-banner.jpg",
+  price: 4999.9,
+  pricePromotional: 4599.9,
+  images: [
+    Image1, // Frente com dock e joy-cons
+    Image2, // Tela OLED em gameplay vibrante
+    Image3  // Modo portátil em mãos
+  ],
+  startDate: "2025-11-05T00:00:00Z",
+  endDate: "2025-12-05T23:59:59Z",
+  discountPercentage: 8, // desconto de lançamento
+  promotionDetails: {
+    title: "Lançamento Exclusivo!",
+    icon: Sparkles
+  },
+  stars: {
+    total: 342,
+    average: 4.9
+  },
+  solds: 187,
+  shipping: {
+    freeShipping: true,
+    value: 0
+  }
+};
+
+
 function App() {
+  const productSell: ProductProps = product
 
   return (
     <div className="bg-black h-screen w-screen">
@@ -87,13 +119,13 @@ function App() {
       <main>
         <section>
           <div className="w-full aspect-square overflow-hidden relative">
-            <ImageCarousel product={product} />
+            <ImageCarousel product={productSell} />
           </div>
           <div className="bg-app-primary w-full p-3 grid grid-cols-2 grid-rows-2">
             <div className="gap-2 flex items-center">
-              <span className="bg-white text-sm px-2 py-0.5 rounded-sm text-app-primary font-semibold capitalize">-{product.discountPercentage}%</span>
+              <span className="bg-white text-sm px-2 py-0.5 rounded-sm text-app-primary font-semibold capitalize">-{productSell.discountPercentage}%</span>
               <p className="text-xs text-white font-semibold capitalize">from</p>
-              <span className="text-white font-semibold capitalize"><span className="mr-1 text-xs">R$</span>{new Intl.NumberFormat('pt-BR', { style: 'decimal', currency: 'BRL' }).format(product.pricePromotional)}</span>
+              <span className="text-white font-semibold capitalize"><span className="mr-1 text-xs">R$</span>{new Intl.NumberFormat('pt-BR', { style: 'decimal', currency: 'BRL' }).format(productSell.pricePromotional)}</span>
             </div>
           </div>
         </section>
