@@ -11,12 +11,19 @@ import Image1 from "@/assets/images/iphone16-preto.webp";
 import Image2 from "@/assets/images/iphone16-rosa.webp";
 import Image3 from "@/assets/images/iphone16-verde.webp";
 import { Tag } from "lucide-react";
-import ImageLayout from "@/assets/images/layout.jpeg";
+import ImageLayout from "@/assets/images/layout2.jpeg";
 import InterestFree from "./components/InterestFree";
 import InfoProduct from "./components/InfoProduct";
 import Freight from "./components/Freight";
 import PricesProduct from "./components/PricesProduct";
 import Footer from "./components/layout/Footer";
+import Variations from "./components/Variations";
+import ProtectionClient from "./components/ProtectionClient";
+import Offers from "./components/Offers";
+import Creators from "./components/Creators";
+import Avaliation from "./components/Avaliation";
+import VisitStore from "./components/VisitStore";
+import AboutProduct from "./components/AboutProduct";
 
 export interface ProductProps {
   title: string;
@@ -103,7 +110,7 @@ function App() {
   const productSell: ProductProps = product;
 
   return (
-    <div className="bg-black h-screen w-screen">
+    <div className="bg-black h-screen w-screen overflow-y-scroll">
       <header>
         <nav className="flex flex-row justify-between p-2">
           <Button
@@ -153,12 +160,20 @@ function App() {
         {productSell.shipping.freeShipping && (
           <Freight value={productSell.shipping.value} />
         )}
-{/* 
-        <section>
+
+        <Variations />
+        <ProtectionClient />
+        <Offers />
+        <Creators />
+        <Avaliation />
+        <VisitStore />
+        <AboutProduct />
+
+        {/* <section>
           <img src={ImageLayout} />
         </section> */}
       </main>
-      <Footer pricePromotional={productSell.pricePromotional} />
+      {/* <Footer pricePromotional={productSell.pricePromotional} /> */}
     </div>
   );
 }
