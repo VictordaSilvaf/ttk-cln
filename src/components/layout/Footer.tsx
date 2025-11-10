@@ -1,5 +1,5 @@
 import { priceFormt } from "@/utils/priceFormat";
-import { MessageCircleIcon, ShoppingCartIcon, StoreIcon } from "lucide-react";
+import { MessageCircleIcon, StoreIcon } from "lucide-react";
 
 export default function Footer({
   pricePromotional,
@@ -13,7 +13,7 @@ export default function Footer({
           <div className="flex items-center gap-4">
             <div className="text-white flex flex-col items-center gap-0.5">
               <StoreIcon />
-              <span className="text-sm text-[#D0D0D0]">Shop</span>
+              <span className="text-sm text-[#D0D0D0]">Loja</span>
             </div>
 
             <div className="text-white flex flex-col items-center gap-0.5">
@@ -23,18 +23,18 @@ export default function Footer({
           </div>
 
           <div className="flex items-center w-full gap-2">
-            <button
+            {/* <button
               className="bg-[#621A29] h-[60px] px-6 rounded-md"
               type="button"
             >
               <ShoppingCartIcon className="text-[#F95570]" />
-            </button>
+            </button> */}
 
             <div className="bg-app-primary flex flex-col gap-0 py-1.5 w-full text-center rounded-md">
               <div className="font-semibold text-lg text-white">
                 {priceFormt(pricePromotional)}
               </div>
-              <div className="text-sm text-white">Buy now free shipping</div>
+              <div className="text-sm text-white">Compre agora e receba frete</div>
             </div>
           </div>
         </div>
@@ -42,3 +42,4 @@ export default function Footer({
     </footer>
   );
 }
+

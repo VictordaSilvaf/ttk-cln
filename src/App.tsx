@@ -3,20 +3,12 @@ import {
   ChevronLeftIcon,
   EllipsisIcon,
   ShoppingCartIcon,
-  Sparkles,
-  type LucideIcon,
 } from "lucide-react";
 import ShareIcon from "@/assets/images/compartilhar.png";
-import Image1 from "@/assets/images/iphone16-preto.webp";
-import Image2 from "@/assets/images/iphone16-rosa.webp";
-import Image3 from "@/assets/images/iphone16-verde.webp";
-import { Tag } from "lucide-react";
-import ImageLayout from "@/assets/images/layout2.jpeg";
 import InterestFree from "./components/InterestFree";
 import InfoProduct from "./components/InfoProduct";
 import Freight from "./components/Freight";
 import PricesProduct from "./components/PricesProduct";
-import Footer from "./components/layout/Footer";
 import Variations from "./components/Variations";
 import ProtectionClient from "./components/ProtectionClient";
 import Offers from "./components/Offers";
@@ -24,156 +16,59 @@ import Creators from "./components/Creators";
 import Avaliation from "./components/Avaliation";
 import VisitStore from "./components/VisitStore";
 import AboutProduct from "./components/AboutProduct";
-
-export interface ProductProps {
-  title: string;
-  description: string;
-  descriptionImage: string;
-  price: number;
-  pricePromotional: number;
-  images: string[];
-  startDate: string;
-  endDate: string;
-  discountPercentage: number;
-  promotionDetails: {
-    title: string;
-    icon: LucideIcon;
-  };
-  stars: {
-    total: number;
-    average: number;
-  };
-  solds: number;
-  shipping: {
-    freeShipping: boolean;
-    value: number;
-  };
-}
-
-const product: ProductProps = {
-  title: "iPhone 15 Pro Max",
-  description:
-    "O iPhone 15 Pro Max combina design elegante, desempenho de ponta e câmera de alta resolução para quem busca o melhor da Apple.",
-  descriptionImage: "https://example.com/iphone15promax.jpg",
-  price: 7999.9,
-  pricePromotional: 7499.9,
-  images: [Image1, Image2, Image3],
-  startDate: "2025-11-01T00:00:00Z",
-  endDate: "2025-11-30T23:59:59Z",
-  discountPercentage: 6, // percentual promocional aproximado
-  promotionDetails: {
-    title: "Desconto Especial",
-    icon: Tag,
-  },
-  stars: {
-    total: 124,
-    average: 4.8,
-  },
-  solds: 58,
-  shipping: {
-    freeShipping: true,
-    value: 0,
-  },
-};
-
-const product2: ProductProps = {
-  title: "Nintendo Switch 2 – A Nova Geração da Diversão",
-  description:
-    "O novo Nintendo Switch 2 chegou com tudo! Gráficos aprimorados, desempenho turbo e uma experiência híbrida ainda mais fluida. Jogue onde quiser, com quem quiser, sem limites — agora com tela OLED 4K, Joy-Cons redesenhados e bateria de longa duração.",
-  descriptionImage: "https://example.com/nintendo-switch-2-banner.jpg",
-  price: 4999.9,
-  pricePromotional: 4599.9,
-  images: [
-    Image1, // Frente com dock e joy-cons
-    Image2, // Tela OLED em gameplay vibrante
-    Image3, // Modo portátil em mãos
-  ],
-  startDate: "2025-11-05T00:00:00Z",
-  endDate: "2025-12-05T23:59:59Z",
-  discountPercentage: 8, // desconto de lançamento
-  promotionDetails: {
-    title: "Lançamento Exclusivo!",
-    icon: Sparkles,
-  },
-  stars: {
-    total: 342,
-    average: 4.9,
-  },
-  solds: 187,
-  shipping: {
-    freeShipping: true,
-    value: 0,
-  },
-};
+import { type ProductProps } from "./data/products";
+import { useLoaderData } from "react-router";
+import MenuComponent from "./components/MenuComponent";
+import ActionBar from "./components/ActionBar";
+import ProductTabs from "./components/ProductTabs";
 
 function App() {
-  const productSell: ProductProps = product;
+  const product = useLoaderData() as ProductProps | null;
+
+  // Se não encontrar produto
+  if (!product) {
+    return (
+      <div className="bg-black min-h-screen flex items-center justify-center p-4">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white mb-2">Produto não encontrado</h1>
+          <p className="text-[#D0D0D0]">Verifique o link ou volte à página inicial.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-black h-screen w-screen overflow-y-scroll">
-      <header>
-        <nav className="flex flex-row justify-between p-2">
-          <Button
-            variant={"ghost"}
-            className="p-1.5! dark:hover:bg-black cursor-pointer"
-          >
-            <ChevronLeftIcon className="text-white size-5" />
-          </Button>
-
-          <div className="flex flex-row gap-1">
-            <Button
-              variant={"ghost"}
-              className="dark:hover:bg-black cursor-pointer"
-            >
-              <img src={ShareIcon} alt="logo" className="size-5" />
-            </Button>
-            <Button
-              variant={"ghost"}
-              className="dark:hover:bg-black cursor-pointer"
-            >
-              <ShoppingCartIcon className="text-white size-5" />
-            </Button>
-            <Button
-              variant={"ghost"}
-              className="dark:hover:bg-black cursor-pointer"
-            >
-              <EllipsisIcon className="text-white size-5" />
-            </Button>
-          </div>
-        </nav>
+    <div className="bg-black h-screen w-screen overflow-y-scroll relative scrollbar-hide">
+      <header className="fixed top-0 left-0 right-0 bg-black z-50 border-b border-white/10">
+        <ActionBar />
+        <ProductTabs />
       </header>
-      <main>
-        <PricesProduct
-          product={productSell}
-          price={productSell.price}
-          promotional={productSell.pricePromotional}
-          discountPercentage={productSell.discountPercentage}
-        />
-        <InterestFree />
-        <InfoProduct
-          title={productSell.title}
-          average={productSell.stars.average}
-          total={productSell.stars.total}
-          solds={productSell.solds}
-        />
 
-        {productSell.shipping.freeShipping && (
-          <Freight value={productSell.shipping.value} />
-        )}
+      <main className="pt-32 space-y-6 pb-32 overflow-y-auto">
+        <section id="overview">
+          <PricesProduct product={product} />
+          <InterestFree product={product} />
+          <InfoProduct product={product} />
+          {product.shipping.freeShipping && <Freight product={product} />}
+          <Variations product={product} />
+        </section>
 
-        <Variations />
-        <ProtectionClient />
-        <Offers />
-        <Creators />
-        <Avaliation />
-        <VisitStore />
-        <AboutProduct />
+        <section id="reviews">
+          <Avaliation product={product} />
+        </section>
 
-        {/* <section>
-          <img src={ImageLayout} />
-        </section> */}
+        <section id="description">
+          <AboutProduct product={product} />
+        </section>
+
+        <section id="recommendations">
+          {/* <Offers product={product} /> */}
+          {/* <Creators product={product} /> */}
+          <VisitStore product={product} />
+        </section>
+
+        <MenuComponent />
       </main>
-      {/* <Footer pricePromotional={productSell.pricePromotional} /> */}
     </div>
   );
 }

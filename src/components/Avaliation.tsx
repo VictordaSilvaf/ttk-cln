@@ -1,59 +1,88 @@
-import { CameraIcon, StarIcon } from "lucide-react";
+// src/components/Avaliation.tsx
+import { StarIcon, StarHalfIcon, CameraIcon } from "lucide-react";
+import { formatNumber } from "@/utils/formatNumber";
+import { formatDateBR } from "@/utils/formatDateBR2";
+import type { ProductProps } from "@/data/products";
 
-export default function Avaliation() {
+interface AvaliationProps {
+  product: ProductProps;
+}
+
+export default function Avaliation({ product }: AvaliationProps) {
+  const { reviews } = product;
+  const { total, average, list, withMedia } = reviews;
+  console.log(total, average, list, withMedia);
+
+
+  const renderStars = (rating: number) => {
+    const full = Math.floor(rating);
+    const hasHalf = rating % 1 >= 0.5;
+    const empty = 5 - full - (hasHalf ? 1 : 0);
+
+    return (
+      <>
+        {Array.from({ length: full }).map((_, i) => (
+          <StarIcon key={`full-${i}`} className="size-4 text-yellow-400 fill-yellow-400" />
+        ))}
+        {hasHalf && <StarHalfIcon className="size-4 text-yellow-400 fill-yellow-400" />}
+        {Array.from({ length: empty }).map((_, i) => (
+          <StarIcon key={`empty-${i}`} className="size-4 text-yellow-400" />
+        ))}
+      </>
+    );
+  };
+
   return (
     <section className="px-4 mt-3 py-4 bg-[#121212]">
-      <p className="font-bold text-lg text-[#d0d0d0]">
-        Avaliações dos clientes (1,4 mil)
+      {/* Título + Média */}
+      <p className="font-bold text-lg text-[#D0D0D0]">
+        Avaliações dos clientes ({formatNumber(total)})
       </p>
-      <div className="mt-3">
-        <div className="flex items-center gap-2">
-          <p className="text-white font-semibold">
-            4.3 <span className="text-[#d0d0d0] text-sm">/5</span>
-          </p>
 
-          <div className="flex items-center gap-1">
-            <StarIcon className="text-yellow-300 size-5" />
-            <StarIcon className="text-yellow-300 size-5" />
-            <StarIcon className="text-yellow-300 size-5" />
-          </div>
+      <div className="mt-3 flex items-center gap-2">
+        <p className="text-white font-semibold">
+          {average.toFixed(1)} <span className="text-[#D0D0D0] text-sm">/5</span>
+        </p>
+        <div className="flex items-center gap-0.5">
+          {renderStars(average)}
         </div>
       </div>
 
-      <div className="mt-5">
-        {[1, 2].map(() => (
-          <div className="mb-7">
+      {/* Lista de avaliações */}
+      <div className="mt-5 space-y-7">
+        {list.map((review) => (
+          <div key={review.id}>
             <div className="flex items-center gap-2">
-              <div className="rounded-full size-7 bg-white"></div>
-              <p className="text-[#d0d0d0] text-sm">Victor da Silva</p>
-            </div>
-            <div className="flex items-center gap-1 mt-3">
-              <StarIcon className="text-yellow-300 size-4" />
-              <StarIcon className="text-yellow-300 size-4" />
-              <StarIcon className="text-yellow-300 size-4" />
-              <StarIcon className="text-yellow-300 size-4" />
-              <StarIcon className="text-yellow-300 size-4" />
+              <div className="size-7 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
+              <p className="text-[#D0D0D0] text-sm font-medium">{review.author}</p>
+              {review.hasMedia && (
+                <CameraIcon className="size-3.5 text-[#19BFC3] ml-auto" />
+              )}
             </div>
 
-            <div className="text-[#d0d0d0] text-sm mt-3">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat,
-              ipsam autem! Consequatur, omnis. Perspiciatis amet pariatur
-              architecto quas repudiandae iure recusandae itaque blanditiis
-              totam voluptate! Nam perferendis a consequuntur veniam?
+            <div className="flex items-center gap-0.5 mt-2">
+              {renderStars(review.rating)}
             </div>
+
+            <p className="text-[#D0D0D0] text-sm mt-2 leading-relaxed">
+              {review.comment}
+            </p>
+
+            <p className="text-[#8B8B8B] text-xs mt-1">{formatDateBR(review.date)}</p>
           </div>
         ))}
       </div>
 
-      <div className="border-t border-gray-100/20"></div>
-      <div className="">
-        <p className="font-bold text-md mt-3 text-[#d0d0d0]">
-          Avaliações da loja (1,4 mil)
+      {/* Avaliações da loja */}
+      <div className="border-t border-white/10 mt-6 pt-4">
+        <p className="font-bold text-md text-[#D0D0D0]">
+          Avaliações da loja ({formatNumber(total)})
         </p>
+
         <div className="mt-3">
-          <button className="bg-gray-200/10 rounded-md flex items-center gap-1 py-1 px-1.5 font-medium text-sm text-[#d0d0d0]">
+          <button className="bg-white/5 hover:bg-white/10 rounded-md flex items-center gap-1.5 py-1.5 px-2 font-medium text-sm text-[#D0D0D0] transition-colors">
             <CameraIcon className="size-4" />
-            Inclui imagens ou vídeos (100)
+            Inclui imagens ou vídeos ({withMedia})
           </button>
         </div>
       </div>

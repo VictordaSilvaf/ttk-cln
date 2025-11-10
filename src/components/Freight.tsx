@@ -1,20 +1,45 @@
+// src/components/Freight.tsx
 import { priceFormt } from "@/utils/priceFormat";
-import { TruckIcon } from "lucide-react";
+import { formatDateBR } from "@/utils/formatDateBR";
+import { TruckIcon, CheckCircle2Icon } from "lucide-react";
+import type { ProductProps } from "@/data/products";
 
-export default function Freight({ value }: { value: number }) {
+interface FreightProps {
+  product: ProductProps;
+}
+
+export default function Freight({ product }: FreightProps) {
+  const { shipping } = product;
+  const { freeShipping, value, estimatedDelivery } = shipping;
+
   return (
-    <section className=" mt-5 px-4 text-white">
-      <div className="border-t border-gray-100/20 px-4"></div>
-      <div className="flex items-center mt-4 gap-1">
-        <TruckIcon className="text-[#D0D0D0]" />
-        <div className="bg-[#054D47] ml-1.5 rounded-md f py-1 text-sm px-1.5 font-semibold text-[#81C4C3]">
-          <p className="-mt-0.5">{ value === 0 ?  'Free shipping' : `${priceFormt(value)}` }</p>
-        </div>
-        <p className="text-[#D0D0D0]">Get by Nov 10-17</p>
+    <section className="mt-5 px-4 text-white">
+      <div className="border-t border-white/10"></div>
+
+      <div className="flex items-center mt-4 gap-2">
+        <TruckIcon className="size-5 text-[#D0D0D0] flex-shrink-0" />
+
+        {freeShipping ? (
+          <div className="flex items-center gap-1.5 bg-emerald-900/50 rounded-md py-1 px-2 text-sm font-semibold text-emerald-300">
+            <CheckCircle2Icon className="size-4" />
+            <span>Frete Grátis</span>
+          </div>
+        ) : (
+          <div className="bg-amber-900/50 rounded-md py-1 px-2 text-sm font-semibold text-amber-300">
+            Frete: {priceFormt(value)}
+          </div>
+        )}
+
+        <p className="text-[#D0D0D0] text-sm">
+          Chegará até <span className="font-medium">{formatDateBR(estimatedDelivery)}</span>
+        </p>
       </div>
-      <p className="text-[#D0D0D0] mt-2 ml-9">
-        Taxa de envio: <span>R$ 10,80</span>
-      </p>
+
+      {!freeShipping && (
+        <p className="text-[#D0D0D0]/80 text-xs mt-1.5 ml-9">
+          Taxa de envio incluída
+        </p>
+      )}
     </section>
   );
 }
