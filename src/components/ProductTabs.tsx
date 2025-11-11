@@ -57,7 +57,7 @@ export default function ProductTabs({
 
     return (
         <nav
-            className="flex overflow-x-auto scrollbar-hide border-b border-white/10"
+            className="flex overflow-x-auto scrollbar-hide border-b border-primary/10"
             role="tablist"
             aria-label="Seções do produto"
         >
@@ -69,10 +69,10 @@ export default function ProductTabs({
                         key={tab.id}
                         onClick={() => handleClick(tab.id)}
                         className={`
-              px-4 py-3 text-sm font-medium whitespace-nowrap transition-all
+              px-4 py-1 text-sm font-medium whitespace-nowrap transition-all
               ${isActive
-                                ? "text-white border-b-2 border-white"
-                                : "text-white/60 hover:text-white/80 border-b-2 border-transparent"
+                                ? "text-primary border-b-2 border-primary"
+                                : "text-primary/60 hover:text-primary/80 border-b-2 border-transparent"
                             }
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50
             `}

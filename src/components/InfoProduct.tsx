@@ -11,7 +11,7 @@ interface InfoProductProps {
 }
 
 export default function InfoProduct({ product }: InfoProductProps) {
-  const { title, stars, solds } = product;
+  const { stars, solds, variations } = product;
   const { average, total } = stars;
 
   /** Renderiza as 5 estrelas (cheia, meia ou vazia) */
@@ -69,13 +69,13 @@ export default function InfoProduct({ product }: InfoProductProps) {
       {/* Título + Favorito */}
       <section className="mt-3 px-4">
         <div className="flex items-start justify-between gap-3">
-          <h2 className="font-bold text-xl text-[#D0D0D0] leading-tight flex-1">
-            {title}
+          <h2 className="font-bold text-xl text-primary leading-tight flex-1">
+            {variations?.[0]?.title}
           </h2>
           <button
             type="button"
             aria-label="Salvar produto"
-            className="text-[#D0D0D0] hover:text-white transition-colors"
+            className="text-primary hover:text-white transition-colors"
           >
             <BookmarkIcon className="size-6" />
           </button>
@@ -91,18 +91,18 @@ export default function InfoProduct({ product }: InfoProductProps) {
 
       {/* Avaliações + Vendidos */}
       <section className="px-4 mt-2 ">
-        <div className="flex items-center justify-between gap-2 text-sm">
+        <div className="flex items-center gap-2 text-sm">
           <div className="flex items-center gap-1 text-xs">
             {renderStars()}
-            <span className="text-[#D0D0D0] font-medium">
+            <span className="text-primary font-medium">
               {average.toFixed(1)}
             </span>
             <span className="text-[#54719F]">({total} avaliações)</span>
           </div>
 
-          <span className="text-[#D0D0D0]/50">•</span>
+          <span className="text-primary/50">•</span>
 
-          <div className="text-[#D0D0D0] font-medium text-xs">
+          <div className="text-primary font-medium text-xs">
             {solds} {solds === 1 ? "vendido" : "vendidos"}
           </div>
         </div>

@@ -1,95 +1,157 @@
-// src/components/Variations.tsx
 import { useState } from "react";
-import { ChevronRightIcon, LayoutGridIcon, CheckIcon } from "lucide-react";
-import { cn } from "@/lib/utils"; // Shadcn helper
-import type { ProductProps } from "@/data/products";
+import { ChevronRightIcon, CheckIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { ProductProps, ProductVariation } from "@/data/products";
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { useTheme } from "next-themes";
 
 interface VariationsProps {
   product: ProductProps;
+  handleBuy: (variant: ProductVariation) => void;
 }
 
-export default function Variations({ product }: VariationsProps) {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const variations = product?.variations;
+export default function Variations({ product, handleBuy }: VariationsProps) {
+  const [selectedId, setSelectedId] = useState<string | null>(
+    product?.variations?.[0]?.id ?? null
+  );
+  const [quantity, _] = useState(1);
+  const { theme } = useTheme()
+
+  const variations = product?.variations ?? [];
+  const selectedVariation = variations.find((v) => v.id === selectedId);
+
+  const total =
+    (selectedVariation?.pricePromotional ?? selectedVariation?.price ?? 0) *
+    quantity;
 
   return (
-    <section className="mt-4 px-4">
-      <div className="border-t border-white/10"></div>
+    <Drawer>
+      <section className="mt-4 px-4">
+        <div className="border-t border-white/10"></div>
 
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex items-center gap-3">
-          <LayoutGridIcon className="size-4 text-[#D0D0D0]" />
-
-          <div className="flex flex-wrap gap-2">
-            {variations?.slice(0, 3).map((variation) => {
-              const isSelected = selectedId === variation.id;
-              const isOutOfStock = !variation.inStock;
-
-              return (
-                <button
-                  key={variation.id}
-                  onClick={() => variation.inStock && setSelectedId(variation.id)}
-                  disabled={isOutOfStock}
-                  className={cn(
-                    "relative flex items-center justify-center size-9 rounded-md border transition-all",
-                    isSelected
-                      ? "border-white bg-white/10"
-                      : "border-white/30 bg-white/5",
-                    isOutOfStock && "opacity-50 cursor-not-allowed"
-                  )}
-                  aria-label={`Selecionar ${variation.label}`}
-                >
-                  {variation.type === "color" ? (
-                    <div
-                      className="size-6 rounded-full"
-                      style={{ backgroundColor: getColorValue(variation.value) }}
-                    />
-                  ) : (
-                    <span className="text-xs font-medium text-[#D0D0D0]">
-                      {variation.value}
-                    </span>
-                  )}
-
-                  {isSelected && (
-                    <CheckIcon className="absolute -top-1 -right-1 size-3 text-white bg-emerald-500 rounded-full p-0.5" />
-                  )}
-
-                  {isOutOfStock && (
-                    <span className="absolute inset-0 text-[8px] flex items-center justify-center font-bold text-red-400">
-                      ESGOTADO
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-
-            {variations && variations.length > 3 && (
-              <div className="flex items-center justify-center size-9 rounded-md bg-white/5 border border-white/30">
-                <span className="text-xs text-[#D0D0D0]">+{variations?.length - 3}</span>
-              </div>
-            )}
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex flex-col">
+            <p className="text-sm text-primary/80 font-medium">
+              {variations?.length}{" "}
+              {variations?.length === 1 ? "opção disponível" : "opções disponíveis"}
+            </p>
           </div>
 
-          <p className="text-[#D0D0D0] text-sm">
-            {variations?.length} {variations?.length === 1 ? "opção" : "opções"} disponível
-            {variations?.length !== 1 && "s"}
-          </p>
+          <DrawerTrigger asChild>
+            <button className="flex items-center gap-1 text-sm text-primary/80 hover:text-primary transition">
+              Selecionar versão
+              <ChevronRightIcon className="size-4" />
+            </button>
+          </DrawerTrigger>
         </div>
+      </section>
 
-        <ChevronRightIcon className="size-5 text-[#D0D0D0]" />
-      </div>
-    </section>
+      <DrawerContent className="bg-background text-white border-t border-white/10">
+        <div className="mx-auto w-full max-w-md p-5 space-y-4">
+          <DrawerHeader className="pb-0">
+            <DrawerTitle className="text-lg font-semibold text-primary">
+              Selecione a versão
+            </DrawerTitle>
+          </DrawerHeader>
+
+          {/* Lista de variações */}
+          <div className="space-y-3">
+            {variations.map((variation) => {
+              const isSelected = selectedId === variation.id;
+              return (
+                <div
+                  key={variation.id}
+                  onClick={() => setSelectedId(variation.id)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-xl border px-3 py-3 cursor-pointer transition-all",
+                    isSelected
+                      ? "border-rose-500 bg-rose-500/10"
+                      : `border-primary/10 hover:border-primary/30`
+                  )}
+                >
+                  <img
+                    src={variation.image}
+                    alt={variation.title}
+                    className="w-16 h-16 rounded-lg object-cover"
+                  />
+
+                  <div className="flex flex-col flex-1">
+                    <span className="font-medium text-primary text-sm">
+                      {variation.title}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-rose-400 font-semibold">
+                        R$ {variation?.pricePromotional?.toFixed(2)}
+                      </span>
+                      <span className="text-xs text-primary/40 line-through">
+                        R$ {variation.price.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {isSelected && (
+                    <CheckIcon className="text-rose-500 size-5 shrink-0" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Quantidade */}
+          {/* <div className="flex items-center justify-between pt-4">
+            <span className="text-white/80 font-medium">Quantidade</span>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                className="text-white border border-white/20 size-8"
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+              >
+                -
+              </Button>
+              <span className="text-lg font-semibold w-6 text-center">{quantity}</span>
+              <Button
+                variant="ghost"
+                className="text-white border border-white/20 size-8"
+                onClick={() => setQuantity((q) => q + 1)}
+              >
+                +
+              </Button>
+            </div>
+          </div> */}
+
+          {/* Total */}
+          <div className="flex items-center justify-between pt-4 border-t border-primary/10">
+            <span className="text-primary/60 text-sm font-medium">Total:</span>
+            <span className="text-rose-400 text-xl font-semibold">
+              R$ {total.toFixed(2)}
+            </span>
+          </div>
+
+          {/* Botões */}
+          <DrawerFooter className="pt-4 flex flex-col gap-3">
+            <Button onClick={() => handleBuy(selectedVariation || variations[0])} className="w-full bg-rose-500 hover:bg-rose-600 text-white font-medium px-4 py-2 rounded-md">
+              Comprar agora
+            </Button>
+            <DrawerClose asChild>
+              <Button
+                variant="ghost"
+                className="w-full text-white/60 hover:text-white/80"
+              >
+                Cancelar
+              </Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </div>
+      </DrawerContent>
+    </Drawer>
   );
-}
-
-// Helper para cores
-function getColorValue(value: string): string {
-  const map: Record<string, string> = {
-    black: "#000000",
-    pink: "#F8C8DC",
-    green: "#90EE90",
-    white: "#FFFFFF",
-    blue: "#4169E1",
-  };
-  return map[value] || value;
 }

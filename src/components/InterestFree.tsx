@@ -1,15 +1,15 @@
 // src/components/InterestFree.tsx
-import { formatInstallment } from "@/utils/formatInstallment";
-import { priceFormt } from "@/utils/priceFormat";
-import { AppWindowIcon, ChevronRightIcon, TicketIcon } from "lucide-react";
+import { ChevronRightIcon, TicketIcon } from "lucide-react";
 import type { ProductProps } from "@/data/products";
+import { useTheme } from "next-themes";
 
 interface InterestFreeProps {
   product: ProductProps;
 }
 
 export default function InterestFree({ product }: InterestFreeProps) {
-  const { installments, coupons } = product;
+  const { coupons } = product;
+  const { theme } = useTheme();
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function InterestFree({ product }: InterestFreeProps) {
           {coupons.map((coupon, index) => (
             <button
               key={index}
-              className="bg-[#621A29] rounded-md flex items-center gap-1 py-1.5 px-2 font-medium text-sm text-[#EBB4BA] whitespace-nowrap"
+              className={`rounded-md flex items-center gap-1 py-1.5 px-2 font-medium text-sm text-[#EBB4BA] whitespace-nowrap ${theme === 'light' ? 'bg-app-primary/30 text-app-primary' : 'bg-[#621A29]/80 text-[#621A29]'}`}
             >
               {coupon.bonus ? (
                 <TicketIcon className="size-4" />

@@ -1,15 +1,3 @@
-
-import Image1 from "@/assets/images/iphone16-preto.webp";
-import Image2 from "@/assets/images/iphone16-rosa.webp";
-import Image3 from "@/assets/images/iphone16-verde.webp";
-import Thumb1 from "@/assets/images/iphone16-preto.webp";
-import Thumb2 from "@/assets/images/iphone16-rosa.webp";
-import Thumb3 from "@/assets/images/iphone16-verde.webp";
-import Prod1 from "@/assets/images/iphone16-rosa.webp";
-import Prod2 from "@/assets/images/iphone16-preto.webp";
-import StoreAvatar from "@/assets/images/iphone16-verde.webp";
-import DescImg1 from "@/assets/images/iphone16-preto.webp";
-import DescImg2 from "@/assets/images/iphone16-rosa.webp";
 import { Sparkles, type LucideIcon } from "lucide-react";
 
 export interface ProductProps {
@@ -50,7 +38,7 @@ export interface ProductProps {
         value: number;
         estimatedDelivery: string;
     };
-    variations?: ProductVariation[];
+    variations: ProductVariation[];
     protection: {
         verifiedStore: boolean;
         guarantees: string[];
@@ -78,10 +66,14 @@ export interface ProductProps {
 export interface ProductVariation {
     id: string;
     type: "color" | "size" | "storage";
+    title: string;
     label: string;
     value: string;
     inStock: boolean;
     image?: string; // opcional: imagem específica
+    price: number;
+    pricePromotional?: number;
+    checkoutUrl: string;
 }
 
 export interface Coupon {
@@ -106,10 +98,15 @@ export interface CreatorVideo {
 export interface Review {
     id: string;
     author: string;
+    avatar: string;
     rating: number; // 1 a 5
     comment: string;
     date: string; // ISO
     hasMedia?: boolean;
+    media?: {
+        type: "image" | "video";
+        url: string;
+    };
 }
 
 export interface Store {
@@ -151,10 +148,12 @@ import BundleImg3 from "@/assets/images/switch2/bundle-switch-online.jpg";
 import BundleThumb1 from "@/assets/images/switch2/bundle-creator1.jpg";
 import BundleThumb2 from "@/assets/images/switch2/bundle-creator2.jpg";
 import BundleStoreAvatar from "@/assets/images/switch2/nintendo-store.jpg";
-import BundleProd1 from "@/assets/images/switch2/mario-odyssey.jpg";
-import BundleProd2 from "@/assets/images/switch2/zelda-switch.jpg";
 import BundleDesc1 from "@/assets/images/switch2/bundle-especificacoes.jpg";
 import BundleDesc2 from "@/assets/images/switch2/bundle-conteudo.jpg";
+import Review1 from "@/assets/images/switch2/review1.jpg";
+import Review2 from "@/assets/images/switch2/review2.jpg";
+import Review3 from "@/assets/images/switch2/review3.jpg";
+import Review4 from "@/assets/images/switch2/review4.jpg";
 
 export const productBundle: ProductProps = {
     slug: "console-nintendo-switch-2-mario-kart-world-3-meses-online",
@@ -192,16 +191,26 @@ export const productBundle: ProductProps = {
         {
             id: "1",
             type: "storage",
+            title: "Console Nintendo Switch 2",
             label: "256GB",
             value: "256",
-            inStock: true
+            inStock: true,
+            image: BundleDesc1,
+            pricePromotional: 99.90,
+            price: 4599.90,
+            checkoutUrl: "https://pay.trendbombou.site/69121521dc41853b51ba1f7d"
         },
         {
             id: "2",
             type: "storage",
+            title: "Console Nintendo Switch 2 + Mario Kart world + 3 Meses Nintendo Switch Online",
             label: "512GB",
             value: "512",
-            inStock: true
+            inStock: true,
+            image: BundleDesc2,
+            pricePromotional: 129.90,
+            price: 5999.90,
+            checkoutUrl: "https://pay.trendbombou.site/69122273dc41853b51ba4f21"
         },
     ],
     protection: {
@@ -251,20 +260,111 @@ export const productBundle: ProductProps = {
             {
                 id: "br1",
                 author: "João Gamer",
+                avatar: "https://randomuser.me/api/portraits/men/32.jpg",
                 rating: 5,
-                comment: "MELHOR COMPRA! Chegou em 3 dias, tudo lacrado. Mario Kart é viciante e o online é perfeito!",
+                comment:
+                    "Simplesmente sensacional! Chegou em 3 dias, tudo lacrado e funcionando. Já joguei o fim de semana todo, Mario Kart é viciante demais!",
                 date: "2025-11-08T16:45:00Z",
                 hasMedia: true,
+                media: {
+                    type: "image",
+                    url: Review1,
+                },
             },
             {
                 id: "br2",
-                author: "Fernanda L.",
+                author: "Fernanda Lima",
+                avatar: "https://randomuser.me/api/portraits/women/55.jpg",
                 rating: 5,
-                comment: "Perfeito para presentear! Filha amou. Frete grátis e chegou antes do previsto.",
+                comment:
+                    "Comprei de presente pro meu filho e ele amou! Chegou super rápido, bem embalado e com frete grátis. Recomendo demais!",
                 date: "2025-11-07T11:20:00Z",
                 hasMedia: false,
             },
-        ],
+            {
+                id: "br3",
+                author: "Carlos M.",
+                avatar: "https://randomuser.me/api/portraits/men/48.jpg",
+                rating: 4,
+                comment:
+                    "Produto excelente! Só achei que podia vir com mais acessórios, mas fora isso, tudo certo. Atendimento foi ótimo.",
+                date: "2025-11-06T18:10:00Z",
+                hasMedia: false,
+            },
+            {
+                id: "br4",
+                author: "Ana Souza",
+                avatar: "https://randomuser.me/api/portraits/women/60.jpg",
+                rating: 5,
+                comment:
+                    "Amei! Muito fácil de configurar e usar. Entrega foi super rápida e o produto é de ótima qualidade!",
+                date: "2025-11-05T09:32:00Z",
+                hasMedia: true,
+                media: {
+                    type: "video",
+                    url: Review2,
+                },
+            },
+            {
+                id: "br5",
+                author: "Rafael Torres",
+                avatar: "https://randomuser.me/api/portraits/men/70.jpg",
+                rating: 5,
+                comment:
+                    "Vale cada centavo! O desempenho é incrível e o visual é lindo. Chegou antes do prazo, nota 10!",
+                date: "2025-11-04T14:05:00Z",
+                hasMedia: false,
+            },
+            {
+                id: "br6",
+                author: "Mariana Costa",
+                avatar: "https://randomuser.me/api/portraits/women/25.jpg",
+                rating: 4,
+                comment:
+                    "Gostei bastante! Embalagem perfeita, produto original e funcionando bem. Só demorou um pouquinho na entrega.",
+                date: "2025-11-03T20:45:00Z",
+                hasMedia: false,
+            },
+            {
+                id: "br7",
+                author: "Lucas Andrade",
+                avatar: "https://randomuser.me/api/portraits/men/15.jpg",
+                rating: 5,
+                comment:
+                    "Produto impecável! A qualidade me surpreendeu. Tô jogando todo dia com os amigos, e roda liso. Vale muito a pena!",
+                date: "2025-11-09T12:15:00Z",
+                hasMedia: true,
+                media: {
+                    type: "image",
+                    url: Review3,
+                },
+            },
+            {
+                id: "br8",
+                author: "Beatriz Nogueira",
+                avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+                rating: 5,
+                comment:
+                    "Chegou tudo certinho e super bem embalado! A cor é linda e o acabamento é perfeito. Tô apaixonada 😍",
+                date: "2025-11-08T17:40:00Z",
+                hasMedia: true,
+                media: {
+                    type: "image",
+                    url: Review4,
+                },
+            },
+            {
+                id: "br9",
+                author: "Felipe Rocha",
+                avatar: "https://randomuser.me/api/portraits/men/26.jpg",
+                rating: 4,
+                comment:
+                    "Entrega super rápida e produto original. Só achei o cabo meio curto, mas o resto tá ótimo. Recomendo!",
+                date: "2025-11-07T22:05:00Z",
+                hasMedia: false,
+            }
+
+        ]
     },
     store: {
         id: "nintendo-br",

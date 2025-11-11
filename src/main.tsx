@@ -5,12 +5,14 @@ import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router';
 import App from './App.tsx';
 import { getProductBySlug } from './data/products';
+import { ThemeProvider } from './components/theme-provider.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/p/:slug",
     element: <App />,
     loader: ({ params }) => {
+      if (!params.slug) return null;
       return getProductBySlug(params.slug!) || null;
     },
   },
@@ -22,6 +24,13 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>
 );

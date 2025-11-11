@@ -20,11 +20,11 @@ export default function AboutProduct({ product }: AboutProductProps) {
     const showReadMore = paragraphs.length > 3;
 
     return (
-        <section className="px-4 mt-3 py-4 bg-[#121212]">
-            <p className="font-bold text-md text-[#D0D0D0]">Sobre este produto</p>
+        <section className="px-4 mt-3 py-4 bg-background">
+            <p className="font-bold text-md text-primary">Sobre este produto</p>
 
             {/* Descrição com Leia mais/menos */}
-            <div className="mt-3 text-[#D0D0D0] text-sm leading-relaxed space-y-3">
+            <div className="mt-3 text-primary text-sm leading-relaxed space-y-3">
                 {expanded ? (
                     <>
                         {paragraphs.map((para, i) => (
@@ -38,7 +38,7 @@ export default function AboutProduct({ product }: AboutProductProps) {
                 {showReadMore && (
                     <button
                         onClick={() => setExpanded(!expanded)}
-                        className="flex items-center gap-1 text-[#19BFC3] text-sm font-medium hover:underline mt-2"
+                        className="flex items-center gap-1 text-app-primary text-sm font-medium hover:underline mt-2"
                     >
                         {expanded ? (
                             <>Menos <ChevronUpIcon className="size-4" /></>

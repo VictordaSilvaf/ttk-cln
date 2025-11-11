@@ -14,7 +14,7 @@ export default function VisitStore({ product }: VisitStoreProps) {
   const { name, avatar, totalSold, verified, relatedProducts } = store;
 
   return (
-    <section className="px-4 mt-3 py-4 bg-[#121212]">
+    <section className="px-4 mt-3 py-4 bg-backgroud">
       {/* Cabeçalho da loja */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -22,22 +22,22 @@ export default function VisitStore({ product }: VisitStoreProps) {
             <img
               src={avatar}
               alt={name}
-              className="size-16 rounded-full object-cover ring-2 ring-white/10"
+              className="size-16 rounded-full object-cover ring-2 ring-primary/10"
             />
             {verified && (
-              <CheckCircle2Icon className="absolute -bottom-1 -right-1 size-5 text-emerald-400 bg-[#121212] rounded-full" />
+              <CheckCircle2Icon className="absolute -bottom-1 -right-1 size-5 text-emerald-400 bg-background rounded-full" />
             )}
           </div>
 
           <div>
-            <p className="uppercase text-[#D0D0D0] font-bold text-sm tracking-wide">
+            <p className="uppercase text-primary/90 font-bold text-sm tracking-wide">
               {name}
             </p>
-            <p className="text-[#D0D0D0] text-xs">{formatNumber(totalSold)}</p>
+            <p className="text-primary/50 text-xs">{formatNumber(totalSold)}</p>
           </div>
         </div>
 
-        <button className="bg-white/10 hover:bg-white/20 rounded-md flex items-center gap-1.5 py-2 px-6 font-medium text-sm text-[#D0D0D0] transition-colors">
+        <button className="bg-white/10 hover:bg-white/20 border border-primary/10 rounded-md flex items-center gap-1.5 py-2 px-6 font-medium text-sm text-primary transition-colors">
           <StoreIcon className="size-4" />
           Visitar
         </button>

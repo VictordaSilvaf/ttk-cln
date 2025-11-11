@@ -33,15 +33,15 @@ export default function Avaliation({ product }: AvaliationProps) {
   };
 
   return (
-    <section className="px-4 mt-3 py-4 bg-[#121212]">
+    <section className="px-4 mt-3 py-4 bg-background">
       {/* Título + Média */}
-      <p className="font-bold text-lg text-[#D0D0D0]">
+      <p className="font-bold text-lg text-primary/90">
         Avaliações dos clientes ({formatNumber(total)})
       </p>
 
       <div className="mt-3 flex items-center gap-2">
         <p className="text-white font-semibold">
-          {average.toFixed(1)} <span className="text-[#D0D0D0] text-sm">/5</span>
+          {average.toFixed(1)} <span className="text-primary/90 text-sm">/5</span>
         </p>
         <div className="flex items-center gap-0.5">
           {renderStars(average)}
@@ -53,9 +53,15 @@ export default function Avaliation({ product }: AvaliationProps) {
         {list.map((review) => (
           <div key={review.id}>
             <div className="flex items-center gap-2">
-              <div className="size-7 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" />
-              <p className="text-[#D0D0D0] text-sm font-medium">{review.author}</p>
-              {review.hasMedia && (
+              <div className="size-7 rounded-full bg-gradient-to-br from-blue-500 to-purple-500" >
+                <img
+                  src={review.avatar}
+                  alt={review.author}
+                  className="size-7 rounded-full object-cover"
+                />
+              </div>
+              <p className="text-primary/90 text-sm font-medium">{review.author}</p>
+              {review.avatar && (
                 <CameraIcon className="size-3.5 text-[#19BFC3] ml-auto" />
               )}
             </div>
@@ -64,9 +70,17 @@ export default function Avaliation({ product }: AvaliationProps) {
               {renderStars(review.rating)}
             </div>
 
-            <p className="text-[#D0D0D0] text-sm mt-2 leading-relaxed">
+            <p className="text-primary/90 text-sm mt-2 leading-relaxed">
               {review.comment}
             </p>
+
+            {review.hasMedia && (
+              <img
+                src={review.media?.url}
+                alt={review.comment}
+                className="object-cover aspect-square max-h-[200px] rounded-xs"
+              />
+            )}
 
             <p className="text-[#8B8B8B] text-xs mt-1">{formatDateBR(review.date)}</p>
           </div>
@@ -75,7 +89,7 @@ export default function Avaliation({ product }: AvaliationProps) {
 
       {/* Avaliações da loja */}
       <div className="border-t border-white/10 mt-6 pt-4">
-        <p className="font-bold text-md text-[#D0D0D0]">
+        <p className="font-bold text-md text-primary/90">
           Avaliações da loja ({formatNumber(total)})
         </p>
 

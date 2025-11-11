@@ -1,22 +1,12 @@
-import { Button } from "@/components/ui/button";
-import {
-  ChevronLeftIcon,
-  EllipsisIcon,
-  ShoppingCartIcon,
-} from "lucide-react";
-import ShareIcon from "@/assets/images/compartilhar.png";
 import InterestFree from "./components/InterestFree";
 import InfoProduct from "./components/InfoProduct";
 import Freight from "./components/Freight";
 import PricesProduct from "./components/PricesProduct";
 import Variations from "./components/Variations";
-import ProtectionClient from "./components/ProtectionClient";
-import Offers from "./components/Offers";
-import Creators from "./components/Creators";
 import Avaliation from "./components/Avaliation";
 import VisitStore from "./components/VisitStore";
 import AboutProduct from "./components/AboutProduct";
-import { type ProductProps } from "./data/products";
+import { type ProductProps, type ProductVariation } from "./data/products";
 import { useLoaderData } from "react-router";
 import MenuComponent from "./components/MenuComponent";
 import ActionBar from "./components/ActionBar";
@@ -37,20 +27,24 @@ function App() {
     );
   }
 
+  function handleBuy(variant: ProductVariation) {
+    window.location.href = variant.checkoutUrl;
+  }
+
   return (
-    <div className="bg-black h-screen w-screen overflow-y-scroll relative scrollbar-hide">
-      <header className="fixed top-0 left-0 right-0 bg-black z-50 border-b border-white/10">
+    <div className="bg-background h-screen w-screen overflow-y-scroll relative scrollbar-hide">
+      <header className="bg-background fixed top-0 left-0 right-0 z-50 border-b border-white/10">
         <ActionBar />
         <ProductTabs />
       </header>
 
-      <main className="pt-32 space-y-6 pb-32 overflow-y-auto">
+      <main className="pt-20 space-y-6 pb-32 overflow-y-auto">
         <section id="overview">
           <PricesProduct product={product} />
           <InterestFree product={product} />
           <InfoProduct product={product} />
           {product.shipping.freeShipping && <Freight product={product} />}
-          <Variations product={product} />
+          <Variations product={product} handleBuy={handleBuy} />
         </section>
 
         <section id="reviews">
@@ -67,7 +61,7 @@ function App() {
           <VisitStore product={product} />
         </section>
 
-        <MenuComponent />
+        <MenuComponent handleBuy={handleBuy} product={product} />
       </main>
     </div>
   );

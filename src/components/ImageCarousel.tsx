@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
 import type { ProductProps } from "@/data/products";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 interface ImageCarouselProps {
     product: ProductProps;
@@ -53,16 +54,18 @@ export function ImageCarousel({ product }: ImageCarouselProps) {
                             >
                                 <div className="relative h-full w-full">
                                     {/* Botão Fechar */}
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="absolute top-4 left-4 z-50 bg-black/50 hover:bg-black/70"
-                                    >
-                                        <XIcon className="size-6 text-white" />
-                                    </Button>
+                                    <DialogClose asChild>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="absolute top-4 left-4 z-50 bg-black/50 hover:bg-black/70"
+                                        >
+                                            <XIcon className="size-6 text-white" />
+                                        </Button>
+                                    </DialogClose>
 
                                     {/* Carousel no Modal */}
-                                    <Carousel className="h-full w-full" defaultValue={selectedIndex}>
+                                    <Carousel className="h-full w-full flex justify-center items-center" defaultValue={selectedIndex}>
                                         <CarouselContent>
                                             {product.images.map((img, i) => (
                                                 <CarouselItem key={i}>
@@ -82,13 +85,6 @@ export function ImageCarousel({ product }: ImageCarouselProps) {
                                         <CarouselPrevious className="left-4 bg-black/50 border-0 hover:bg-black/70" />
                                         <CarouselNext className="right-4 bg-black/50 border-0 hover:bg-black/70" />
                                     </Carousel>
-
-                                    {/* Indicador de página */}
-                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 bg-black/50 px-3 py-1.5 rounded-full">
-                                        <span className="text-white text-sm font-medium">
-                                            {selectedIndex + 1} / {product.images.length}
-                                        </span>
-                                    </div>
                                 </div>
                             </DialogContent>
                         </Dialog>
