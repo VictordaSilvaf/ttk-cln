@@ -10,12 +10,16 @@ interface PricesProductProps {
 }
 
 export default function PricesProduct({ product }: PricesProductProps) {
-  const { flashSaleEndTime, variations } = product;
-  const countdown = useCountdown(flashSaleEndTime || "");
+  const { variations } = product;
+  const countdown = useCountdown();
 
-  const discountPercentage = variations?.[0]?.pricePromotional ? Math.round(
-    ((variations?.[0]?.price - variations?.[0]?.pricePromotional) / variations?.[0]?.price) * 100
-  ) : 0;
+  const discountPercentage = variations?.[0]?.pricePromotional
+    ? Math.round(
+        ((variations?.[0]?.price - variations?.[0]?.pricePromotional) /
+          variations?.[0]?.price) *
+          100
+      )
+    : 0;
 
   return (
     <section>
@@ -23,7 +27,7 @@ export default function PricesProduct({ product }: PricesProductProps) {
         <ImageCarousel product={product} />
       </div>
 
-      <div className="bg-[#FD732B] py-2 px-4">
+      <div className="py-2 px-4 bg-linear-to-r from-[#fe2a54] to-[#e6544a] flex flex-col">
         <div className="w-full flex items-center justify-between">
           <div className="flex items-center gap-1">
             {discountPercentage > 0 && (
@@ -46,7 +50,9 @@ export default function PricesProduct({ product }: PricesProductProps) {
         </div>
 
         <div className="flex items-center justify-between mt-1">
-          <s className="text-[#FFC9A4] text-sm">{priceFormt(variations?.[0]?.price)}</s>
+          <s className="text-[#FFC9A4] text-sm">
+            {priceFormt(variations?.[0]?.price)}
+          </s>
           <p className="text-right text-white text-sm">
             Termina em:{" "}
             <span className="font-bold text-yellow-300">{countdown}</span>

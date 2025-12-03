@@ -7,6 +7,8 @@ export interface ProductProps {
   descriptionImage: string;
   price: number;
   pricePromotional: number;
+  backRedirectUrl?: string;
+  backRedirectPrice?: number;
   images: string[];
   startDate: string;
   endDate: string;
@@ -393,6 +395,302 @@ export const productBundle: ProductProps = {
 
 ✅ GARANTIA: 2 anos Nintendo + 15 dias devolução grátis`,
     images: [BundleDesc1, BundleDesc2],
+  },
+};
+
+import BundleImg2_1 from "@/assets/images/makita/makita-cooler-main.png";
+import BundleImg2_2 from "@/assets/images/makita/makita-cooler-2.png";
+import BundleImg2_3 from "@/assets/images/makita/makita-cooler-3.png";
+import BundleImg2_4 from "@/assets/images/makita/makita-cooler-4.png";
+import BundleImg2_5 from "@/assets/images/makita/makita-cooler-5.png";
+import BundleImg2_6 from "@/assets/images/makita/makita-cooler-6.png";
+import BundleStoreAvata2_r from "@/assets/images/makita/makita-logo.png";
+import Review2_1 from "@/assets/images/makita/review-makita-1.png";
+import Review2_2 from "@/assets/images/makita/review-makita-2.png";
+import Review2_3 from "@/assets/images/makita/review-makita-3.png";
+import Review2_4 from "@/assets/images/makita/review-makita-4.png";
+
+export const productBundle2: ProductProps = {
+  slug: "refrigerador-aquecedor-makita-cw002gz-50l-bateria-18v",
+  title: "Refrigerador e Aquecedor Makita CW002GZ a Bateria 18V 20 Litros",
+  description:
+    "Geladeira portátil profissional Makita 20L – gela até -18°C e aquece até 60°C! Funciona com bateria 18V LXT, 12V/24V no carro ou tomada 110-220V. Perfeita para obra, camping, pesca, praia e viagens.",
+  descriptionImage: BundleImg2_1,
+  price: 2499.9,
+  pricePromotional: 68.99,
+  backRedirectUrl: "https://pay.produtoselecionado.shop/nQ7kZ7p6RLlG0eJ",
+  backRedirectPrice: 48.99,
+  images: [
+    BundleImg2_1,
+    BundleImg2_2,
+    BundleImg2_3,
+    BundleImg2_4,
+    BundleImg2_5,
+    BundleImg2_6,
+  ], // você adiciona depois
+  startDate: "2025-12-01T00:00:00Z",
+  endDate: "2025-12-31T23:59:59Z",
+  flashSaleEndTime: "09:54:20", // mantém o timer da oferta relâmpago
+  discountPercentage: 80,
+  promotionDetails: {
+    title: "OFERTA RELÂMPAGO 80% OFF",
+    icon: Sparkles, // ou o ícone que você usa
+  },
+  stars: { total: 2341, average: 4.9 },
+  solds: 2653,
+  shipping: {
+    freeShipping: true,
+    value: 0,
+    estimatedDelivery: "Entrega em até 11-14 dez",
+  },
+  installments: {
+    count: 12,
+    value: 5.75, // 68.99 ÷ 12
+    interestFree: true,
+  },
+  coupons: [
+    { title: "Frete Grátis para todo Brasil", bonus: true },
+    { title: "Devolução grátis em até 30 dias", bonus: true },
+  ],
+  variations: [
+    // 20L
+    {
+      id: "1",
+      type: "storage",
+      title: "Cooler Makita CW002GZ de 20L",
+      label: "20L",
+      value: "20l",
+      inStock: true,
+      image: BundleImg2_1, // adicionar depois
+      pricePromotional: 68.99,
+      price: 2499.9,
+      checkoutUrl: "https://pay.produtoselecionado.shop/P5LNZ8zPnpzgaRy",
+    },
+
+    // 50L
+    {
+      id: "2",
+      type: "storage",
+      title: "Cooler Makita CW002GZ de 50L",
+      label: "50L",
+      value: "50l",
+      inStock: true,
+      image: BundleImg2_1, // adicionar depois
+      pricePromotional: 129.99,
+      price: 4999.9,
+      checkoutUrl: "https://pay.produtoselecionado.shop/JqoR32bpvlm3Vj5",
+    },
+
+    // 75L
+    {
+      id: "3",
+      type: "storage",
+      title: "Cooler Makita CW002GZ de 75L",
+      label: "75L",
+      value: "75l",
+      inStock: true,
+      image: BundleImg2_1, // adicionar depois
+      pricePromotional: 212.99,
+      price: 6999.9,
+      checkoutUrl: "https://pay.produtoselecionado.shop/521rZJzlVQqZeaX",
+    },
+  ],
+  protection: {
+    verifiedStore: true,
+    guarantees: [
+      "Loja Oficial Makita no site desde 2018",
+      "Devolução grátis em até 30 dias",
+      "Produto original com nota fiscal",
+      "Garantia Makita Brasil",
+    ],
+  },
+  offers: {
+    coupons: [
+      {
+        id: "makita1",
+        type: "product",
+        title: "80% OFF + Frete Grátis",
+        description: "Oferta válida por tempo limitado",
+        minPurchase: 68.99,
+        validUntil: "2025-12-31T23:59:59Z",
+      },
+    ],
+  },
+  creators: {
+    total: 12,
+    videos: [
+      {
+        id: "m1",
+        thumbnail: "", // adiciona depois
+        author: "Makita Brasil",
+        views: "156K",
+        duration: "6:42",
+      },
+      {
+        id: "m2",
+        thumbnail: "",
+        author: "Ferramentas Kennedy",
+        views: "89K",
+        duration: "8:15",
+      },
+    ],
+  },
+  reviews: {
+    total: 2341,
+    average: 4.9,
+    withMedia: 892,
+    list: [
+      {
+        id: "r1",
+        author: "Roberto Silva",
+        avatar: "https://randomuser.me/api/portraits/men/12.jpg",
+        rating: 5,
+        comment:
+          "Só tenho a agradecer! Comprei para usar nas pescarias e acampamentos. Gelou muito rápido e a bateria 18V dura o dia inteiro. Veio com carregador duplo e duas baterias. Qualidade Makita 100%!",
+        date: "2025-11-30T10:15:00Z",
+        hasMedia: true,
+        media: { type: "image", url: Review2_1 },
+      },
+      {
+        id: "r2",
+        author: "Carlos Mendes",
+        avatar: "https://randomuser.me/api/portraits/men/28.jpg",
+        rating: 5,
+        comment:
+          "Perfeito para levar no barco! Mantém as bebidas geladas por horas sem precisar de gelo. O display digital é muito prático e a rodinha facilita demais o transporte. Recomendo muito!",
+        date: "2025-11-29T14:22:00Z",
+        hasMedia: false,
+      },
+      {
+        id: "r3",
+        author: "Marcos Oliveira",
+        avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+        rating: 5,
+        comment:
+          "Melhor investimento que fiz! Painel digital mostra a temperatura certinha e o refrigerador é super silencioso. Uso no sítio onde não tem energia e funciona perfeito com as baterias!",
+        date: "2025-11-28T09:10:00Z",
+        hasMedia: true,
+        media: { type: "image", url: Review2_2 },
+      },
+      {
+        id: "r4",
+        author: "Fernando Costa",
+        avatar: "https://randomuser.me/api/portraits/men/63.jpg",
+        rating: 5,
+        comment:
+          "Produto de qualidade excepcional! A capacidade de 50 litros é perfeita para viagens longas. Já usei tanto para gelar quanto para aquecer comida. A Makita nunca decepciona!",
+        date: "2025-11-27T17:35:00Z",
+        hasMedia: false,
+      },
+      {
+        id: "r5",
+        author: "André Nascimento",
+        avatar: "https://randomuser.me/api/portraits/men/37.jpg",
+        rating: 5,
+        comment:
+          "Chegou super rápido e muito bem embalado. Cabe muita coisa, gela bem rápido e o sistema de refrigeração é muito eficiente. Compra certeira!",
+        date: "2025-11-26T11:48:00Z",
+        hasMedia: true,
+        media: { type: "video", url: Review2_3 },
+      },
+
+      // ------------------------------------
+      // NOVOS REVIEWS SEM MÍDIA
+      // ------------------------------------
+
+      {
+        id: "r6",
+        author: "João Ferreira",
+        avatar: "https://randomuser.me/api/portraits/men/14.jpg",
+        rating: 5,
+        comment:
+          "Uso no meu carro quando faço entrega de alimentos. Mantém tudo gelado mesmo ficando horas ligado. Não esquenta nada e não faz barulho. Muito acima do esperado!",
+        date: "2025-11-25T08:32:00Z",
+        hasMedia: false,
+      },
+      {
+        id: "r7",
+        author: "Eduardo Ramos",
+        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+        rating: 5,
+        comment:
+          "O consumo de bateria surpreendeu! Achei que duraria pouco, mas aguenta mais de 5 horas gelando no máximo. Construção muito robusta, bem estilo Makita mesmo.",
+        date: "2025-11-24T15:20:00Z",
+        hasMedia: false,
+      },
+      {
+        id: "r8",
+        author: "Ricardo Santos",
+        avatar: "https://randomuser.me/api/portraits/men/50.jpg",
+        rating: 5,
+        comment:
+          "Ideal para viagens longas. Já fiz duas viagens de carro com ela e não tive nenhum problema. Gelou as bebidas rápido e manteve tudo fresco até no calor forte.",
+        date: "2025-11-23T11:55:00Z",
+        hasMedia: false,
+      },
+      {
+        id: "r9",
+        author: "Paulo Azevedo",
+        avatar: "https://randomuser.me/api/portraits/men/21.jpg",
+        rating: 5,
+        comment:
+          "Muito prática! A função de aquecimento também surpreendeu, nunca imaginei usar uma geladeira portátil desse jeito. Valeu cada centavo.",
+        date: "2025-11-22T18:40:00Z",
+        hasMedia: false,
+      },
+      {
+        id: "r10",
+        author: "Gustavo Pereira",
+        avatar: "https://randomuser.me/api/portraits/men/16.jpg",
+        rating: 5,
+        comment:
+          "Comprei para colocar na caminhonete e virou item obrigatório nas viagens. Boa capacidade, gela bem e o painel digital é muito intuitivo.",
+        date: "2025-11-21T09:12:00Z",
+        hasMedia: true,
+        media: { type: "image", url: Review2_4 },
+      },
+    ],
+  },
+  store: {
+    id: "makita-oficial-br",
+    name: "Makita Oficial",
+    avatar: BundleStoreAvata2_r, // adiciona depois
+    totalSold: 15065,
+    verified: true,
+    relatedProducts: [],
+  },
+  about: {
+    description: `REFIGERADOR E AQUECEDOR PORTÁTIL MAKITA CW002GZ 50 LITROS
+
+FUNCIONA DE 3 FORMAS:
+• Bateria 18V LXT Makita (até 17h de autonomia)
+• Tomada 110-220V (casa/escritório)
+• Acendedor de cigarro 12V/24V (carro/caminhão)
+
+PRINCIPAIS CARACTERÍSTICAS:
+• Capacidade real: 50 litros
+• Gela até -18°C e aquece até 60°C
+• 5 temperaturas pré-definidas para refrigeração
+• Resistente a respingos d'água (IPX4)
+• Rodas e alça retrátil para transporte fácil
+• Display digital + controle touch
+• Ideal para obra, camping, pesca, praia, churrasco e viagens
+
+ITENS INCLUSOS:
+• Refrigerador Makita CW002GZ
+• Adaptador CA (tomada)
+• Cabo 12V (acendedor de cigarro)
+• Cinto de ombro
+• Abridor de garrafa
+
+BATERIAS NÃO INCLUSAS – vendidas separadamente
+
+GARANTIAS:
+• Loja Oficial Makita
+• Nota fiscal + Garantia Makita Brasil
+• Frete grátis + Devolução grátis 30 dias
+• Mais de 5.000 unidades vendidas`,
+    images: [],
   },
 };
 

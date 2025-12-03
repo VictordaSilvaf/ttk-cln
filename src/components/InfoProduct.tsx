@@ -11,13 +11,13 @@ interface InfoProductProps {
 }
 
 export default function InfoProduct({ product }: InfoProductProps) {
-  const { stars, solds, variations } = product;
+  const { stars, solds } = product;
   const { average, total } = stars;
 
   /** Renderiza as 5 estrelas (cheia, meia ou vazia) */
   const renderStars = () => {
-    const fullStars = Math.floor(average);                // 4  ou 5
-    const fraction = average - fullStars;                 // 0.0 … 0.999…
+    const fullStars = Math.floor(average); // 4  ou 5
+    const fraction = average - fullStars; // 0.0 … 0.999…
     const hasHalfStar = fraction >= 0.5 && fraction < 1; // só meia se < 1
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
@@ -70,7 +70,7 @@ export default function InfoProduct({ product }: InfoProductProps) {
       <section className="mt-3 px-4">
         <div className="flex items-start justify-between gap-3">
           <h2 className="font-bold text-xl text-primary leading-tight flex-1">
-            {variations?.[0]?.title}
+            {product.title}
           </h2>
           <button
             type="button"

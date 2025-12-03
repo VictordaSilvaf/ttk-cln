@@ -1,9 +1,17 @@
 // src/components/VisitStore.tsx
-import { ChevronRightIcon, StoreIcon, CheckCircle2Icon } from "lucide-react";
+"use client";
+
+import {
+  ChevronRightIcon,
+  CheckCircle2Icon,
+  UserPlus,
+  Check,
+} from "lucide-react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { priceFormt } from "@/utils/priceFormat";
-import { formatNumber } from "@/utils/formatNumber";
 import type { ProductProps } from "@/data/products";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 interface VisitStoreProps {
   product: ProductProps;
@@ -13,44 +21,89 @@ export default function VisitStore({ product }: VisitStoreProps) {
   const { store } = product;
   const { name, avatar, totalSold, verified, relatedProducts } = store;
 
+  // Chave única por loja (usando o nome ou id se tiver)
+  const followKey = `followed_store_${
+    store.id || name.replace(/\s+/g, "_").toLowerCase()
+  }`;
+
+  // Estado local + leitura do localStorage
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(followKey);
+    if (saved === "true") {
+      setIsFollowing(true);
+    }
+  }, [followKey]);
+
+  const handleFollow = () => {
+    const newState = !isFollowing;
+    setIsFollowing(newState);
+    localStorage.setItem(followKey, String(newState));
+
+    // Opcional: disparar evento ou toast
+    if (newState) {
+      console.log(`Agora você segue: ${name}`);
+      // ex: toast.success(`Seguindo ${name}!`);
+    }
+  };
+
   return (
-    <section className="px-4 mt-3 py-4 bg-backgroud">
+    <section className="px-4 mt-3 py-4 bg-background rounded-lg border">
       {/* Cabeçalho da loja */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative">
             <img
-              src={avatar}
+              src={avatar || "/makita-logo.png"}
               alt={name}
               className="size-16 rounded-full object-cover ring-2 ring-primary/10"
             />
             {verified && (
-              <CheckCircle2Icon className="absolute -bottom-1 -right-1 size-5 text-emerald-400 bg-background rounded-full" />
+              <CheckCircle2Icon className="absolute -bottom-1 -right-1 size-5 text-emerald-400 bg-background rounded-full p-0.5" />
             )}
           </div>
 
-          <div>
-            <p className="uppercase text-primary/90 font-bold text-sm tracking-wide">
-              {name}
+          <div className="flex-1">
+            <h3 className="font-medium text-sm">{name}</h3>
+            <p className="text-xs text-muted-foreground">
+              {totalSold?.toLocaleString("pt-BR") || "1.247"} produtos
             </p>
-            <p className="text-primary/50 text-xs">{formatNumber(totalSold)}</p>
+            <p className="text-xs text-muted-foreground">Vendedor desde 2018</p>
           </div>
         </div>
 
-        <button className="bg-white/10 hover:bg-white/20 border border-primary/10 rounded-md flex items-center gap-1.5 py-2 px-6 font-medium text-sm text-primary transition-colors">
-          <StoreIcon className="size-4" />
-          Visitar
-        </button>
+        {/* Botão Seguir / Seguindo */}
+        <Button
+          variant={isFollowing ? "secondary" : "outline"}
+          size="sm"
+          onClick={handleFollow}
+          className="h-9 px-4 text-xs font-medium transition-all"
+        >
+          {isFollowing ? (
+            <>
+              <Check className="w-3.5 h-3.5 mr-1" />
+              Seguindo
+            </>
+          ) : (
+            <>
+              <UserPlus className="w-3.5 h-3.5 mr-1" />
+              Seguir
+            </>
+          )}
+        </Button>
       </div>
+
+      {/* Produtos relacionados */}
       {relatedProducts && relatedProducts.length > 0 && (
         <>
-          <div className="border-t border-white/10 my-4" />
-
-          {/* Produtos relacionados */}
+          <div className="border-t border-border/50 my-4" />
 
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[#D0D0D0] font-semibold text-sm">Mais desta loja</p>
-            <ChevronRightIcon className="size-4 text-[#D0D0D0]" />
+            <p className="font-semibold text-sm text-foreground">
+              Mais desta loja
+            </p>
+            <ChevronRightIcon className="size-4 text-muted-foreground" />
           </div>
 
           <ScrollArea className="w-full">
@@ -60,7 +113,7 @@ export default function VisitStore({ product }: VisitStoreProps) {
                   key={prod.id}
                   className="flex-shrink-0 w-20 cursor-pointer group"
                 >
-                  <div className="relative overflow-hidden rounded-lg">
+                  <div className="relative overflow-hidden rounded-lg bg-muted">
                     <img
                       src={prod.image}
                       alt={prod.title}
@@ -68,8 +121,10 @@ export default function VisitStore({ product }: VisitStoreProps) {
                       loading="lazy"
                     />
                   </div>
-                  <p className="text-[#D0D0D0] text-xs mt-1.5 truncate">{prod.title}</p>
-                  <p className="text-[#19BFC3] text-xs font-medium">
+                  <p className="text-xs mt-1.5 truncate text-muted-foreground">
+                    {prod.title}
+                  </p>
+                  <p className="text-xs font-medium text-primary">
                     {priceFormt(prod.price)}
                   </p>
                 </div>

@@ -40,7 +40,9 @@ export default function Variations({ product, handleBuy }: VariationsProps) {
           <div className="flex flex-col">
             <p className="text-sm text-primary/80 font-medium">
               {variations?.length}{" "}
-              {variations?.length === 1 ? "opção disponível" : "opções disponíveis"}
+              {variations?.length === 1
+                ? "opção disponível"
+                : "opções disponíveis"}
             </p>
           </div>
 
@@ -87,7 +89,7 @@ export default function Variations({ product, handleBuy }: VariationsProps) {
                       {variation.title}
                     </span>
                     <div className="flex items-center gap-2">
-                      <span className="text-rose-400 font-semibold">
+                      <span className="text-rose-600 font-semibold">
                         R$ {variation?.pricePromotional?.toFixed(2)}
                       </span>
                       <span className="text-xs text-primary/40 line-through">
@@ -129,14 +131,17 @@ export default function Variations({ product, handleBuy }: VariationsProps) {
           {/* Total */}
           <div className="flex items-center justify-between pt-4 border-t border-primary/10">
             <span className="text-primary/60 text-sm font-medium">Total:</span>
-            <span className="text-rose-400 text-xl font-semibold">
+            <span className="text-rose-600 text-xl font-semibold">
               R$ {total.toFixed(2)}
             </span>
           </div>
 
           {/* Botões */}
           <DrawerFooter className="pt-4 flex flex-col gap-3">
-            <Button onClick={() => handleBuy(selectedVariation || variations[0])} className="w-full bg-rose-500 hover:bg-rose-600 text-white font-medium px-4 py-2 rounded-md">
+            <Button
+              onClick={() => handleBuy(selectedVariation || variations[0])}
+              className="w-full bg-rose-500 hover:bg-rose-600 text-white font-medium px-4 py-2 rounded-md"
+            >
               Comprar agora
             </Button>
             <DrawerClose asChild>

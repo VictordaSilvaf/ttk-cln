@@ -1,48 +1,52 @@
 import { useState, useEffect } from "react";
 
-export function useCountdown(endTime?: string) {
-    const [timeLeft, setTimeLeft] = useState<string>("");
+export function useCountdown() {
+  const [timeLeft, setTimeLeft] = useState("");
 
-    // Se não tiver endTime, define para amanhã às 13:00 (UTC)
-    const endDate = (() => {
-        if (endTime) {
-            const parsed = new Date(endTime);
-            if (!isNaN(parsed.getTime())) return parsed;
-        }
+  // Calcula o próximo horário HH:25
+  const getNextEndTime = () => {
+    const now = new Date();
+    const end = new Date();
 
-        const now = new Date();
-        const fallback = new Date();
-        fallback.setDate(now.getDate() + 1);
-        fallback.setUTCHours(13, 0, 0, 0);
-        return fallback;
-    })();
+    // Sempre pula para a próxima hora
+    end.setHours(now.getHours() + 1);
+    end.setMinutes(25);
+    end.setSeconds(0);
+    end.setMilliseconds(0);
 
-    useEffect(() => {
-        const calculate = () => {
-            const now = new Date().getTime();
-            const diff = endDate.getTime() - now;
+    return end;
+  };
 
-            if (diff <= 0) {
-                setTimeLeft("Encerrado");
-                return;
-            }
+  useEffect(() => {
+    let endDate = getNextEndTime();
 
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const calculate = () => {
+      const now = new Date().getTime();
+      const diff = endDate.getTime() - now;
 
-            setTimeLeft(
-                `${hours.toString().padStart(2, "0")}:${minutes
-                    .toString()
-                    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-            );
-        };
+      if (diff <= 0) {
+        // Reinicia automaticamente para a próxima hora
+        endDate = getNextEndTime();
+        return;
+      }
 
-        calculate();
-        const interval = setInterval(calculate, 1000);
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
 
-        return () => clearInterval(interval);
-    }, [endTime]);
+      setTimeLeft(
+        `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+          2,
+          "0"
+        )}:${String(seconds).padStart(2, "0")}`
+      );
+    };
 
-    return timeLeft;
+    calculate();
+    const interval = setInterval(calculate, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return timeLeft;
 }

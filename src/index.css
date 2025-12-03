@@ -129,3 +129,17 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.ultra-clean-scroll::-webkit-scrollbar {
+  width: 3px;
+  margin-right: 1px;
+}
+
+.ultra-clean-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+}
+
+.ultra-clean-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}

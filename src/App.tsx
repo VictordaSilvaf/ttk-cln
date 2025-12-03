@@ -7,7 +7,7 @@ import Avaliation from "./components/Avaliation";
 import VisitStore from "./components/VisitStore";
 import AboutProduct from "./components/AboutProduct";
 import {
-  productBundle,
+  productBundle2,
   type ProductProps,
   type ProductVariation,
 } from "./data/products";
@@ -15,12 +15,21 @@ import MenuComponent from "./components/MenuComponent";
 import ActionBar from "./components/ActionBar";
 import ProductTabs from "./components/ProductTabs";
 import { useTheme } from "next-themes";
+import StoreTrust from "./components/StoreTrust";
+import FAQSection from "./components/FaqQuestions";
+import { useState } from "react";
+import { BackRedirect } from "./components/BackRedirect";
 
 function App() {
   const { setTheme } = useTheme();
   setTheme("white");
+  const [open, setOpen] = useState(false);
 
-  const product = productBundle as ProductProps;
+  function handleOpenBackRedirect() {
+    setOpen(!open);
+  }
+
+  const product = productBundle2 as ProductProps;
 
   // Se não encontrar produto
   if (!product) {
@@ -45,7 +54,7 @@ function App() {
   return (
     <div className="bg-background h-screen w-screen overflow-y-scroll relative scrollbar-hide">
       <header className="bg-background fixed top-0 left-0 right-0 z-50 border-b border-white/10">
-        <ActionBar />
+        <ActionBar handleOpenBackRedirect={handleOpenBackRedirect} />
         <ProductTabs />
       </header>
 
@@ -60,6 +69,8 @@ function App() {
 
         <section id="reviews">
           <Avaliation product={product} />
+
+          <StoreTrust product={product} />
         </section>
 
         <section id="description">
@@ -67,12 +78,42 @@ function App() {
         </section>
 
         <section id="recommendations">
-          {/* <Offers product={product} /> */}
-          {/* <Creators product={product} /> */}
           <VisitStore product={product} />
+
+          <FAQSection />
         </section>
 
-        <MenuComponent handleBuy={handleBuy} product={product} />
+        <div className="bg-linear-to-r mx-5 from-[#fe2a54]/10 to-[#fe2a54]/5 p-6 rounded-lg border-2 border-[#fe2a54]/20">
+          <h2 className="text-xl font-bold mb-3 flex items-center gap-2">
+            <span>🎉</span>
+            <span>Oferta Por Tempo Limitado!</span>
+          </h2>
+          <p className="text-muted-foreground mb-4">
+            Aproveite essa oportunidade única de ter o melhor refrigerador
+            portátil Makita com um desconto incrível. Estoque limitado!
+          </p>
+          <div className="bg-background p-4 rounded-lg">
+            <p className="text-sm text-muted-foreground mb-2">
+              ⚠️ Importantes Observações:
+            </p>
+            <ul className="text-xs text-muted-foreground space-y-1">
+              <li>• Baterias não inclusas - vendidas separadamente</li>
+              <li>
+                • A autonomia pode variar dependendo da temperatura ambiente e
+                frequência de abertura
+              </li>
+              <li>• Compatível com todas as baterias 18V LXT Makita</li>
+            </ul>
+          </div>
+        </div>
+
+        <MenuComponent
+          handleBuy={handleBuy}
+          product={product}
+          handleOpenBackRedirect={handleOpenBackRedirect}
+        />
+
+        <BackRedirect open={open} setOpen={setOpen} product={product} />
       </main>
     </div>
   );
