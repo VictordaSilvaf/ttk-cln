@@ -40,7 +40,7 @@ export default function Avaliation({ product }: AvaliationProps) {
       </p>
 
       <div className="mt-3 flex items-center gap-2">
-        <p className="text-white font-semibold">
+        <p className="text-primary font-semibold">
           {average.toFixed(1)} <span className="text-primary/90 text-sm">/5</span>
         </p>
         <div className="flex items-center gap-0.5">

@@ -6,22 +6,33 @@ import Variations from "./components/Variations";
 import Avaliation from "./components/Avaliation";
 import VisitStore from "./components/VisitStore";
 import AboutProduct from "./components/AboutProduct";
-import { type ProductProps, type ProductVariation } from "./data/products";
-import { useLoaderData } from "react-router";
+import {
+  productBundle,
+  type ProductProps,
+  type ProductVariation,
+} from "./data/products";
 import MenuComponent from "./components/MenuComponent";
 import ActionBar from "./components/ActionBar";
 import ProductTabs from "./components/ProductTabs";
+import { useTheme } from "next-themes";
 
 function App() {
-  const product = useLoaderData() as ProductProps | null;
+  const { setTheme } = useTheme();
+  setTheme("white");
+
+  const product = productBundle as ProductProps;
 
   // Se não encontrar produto
   if (!product) {
     return (
-      <div className="bg-black min-h-screen flex items-center justify-center p-4">
+      <div className="bg-background min-h-screen flex items-center justify-center p-4">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-2">Produto não encontrado</h1>
-          <p className="text-[#D0D0D0]">Verifique o link ou volte à página inicial.</p>
+          <h1 className="text-2xl font-bold text-white mb-2">
+            Produto não encontrado
+          </h1>
+          <p className="text-[#D0D0D0]">
+            Verifique o link ou volte à página inicial.
+          </p>
         </div>
       </div>
     );

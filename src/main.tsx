@@ -1,28 +1,28 @@
 // src/main.tsx
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import { RouterProvider, createBrowserRouter } from 'react-router';
-import App from './App.tsx';
-import { getProductBySlug } from './data/products';
-import { ThemeProvider } from './components/theme-provider.tsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { RouterProvider, createBrowserRouter } from "react-router";
+import App from "./App.tsx";
+import { ThemeProvider } from "./components/theme-provider.tsx";
+import { productBundle } from "./data/products.ts";
 
 const router = createBrowserRouter([
   {
-    path: "/p/:slug",
+    path: "/",
     element: <App />,
-    loader: ({ params }) => {
-      if (!params.slug) return null;
-      return getProductBySlug(params.slug!) || null;
-    },
   },
   {
     path: "*",
-    element: <div className="p-8 text-white h-screen w-screen flex justify-center items-center">404 - Produto não encontrado</div>,
+    element: (
+      <div className="p-8 text-white h-screen w-screen flex justify-center items-center">
+        404 - Produto não encontrado
+      </div>
+    ),
   },
 ]);
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider
       attribute="class"

@@ -12,7 +12,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useTheme } from "next-themes";
 
 interface VariationsProps {
   product: ProductProps;
@@ -24,7 +23,6 @@ export default function Variations({ product, handleBuy }: VariationsProps) {
     product?.variations?.[0]?.id ?? null
   );
   const [quantity, _] = useState(1);
-  const { theme } = useTheme()
 
   const variations = product?.variations ?? [];
   const selectedVariation = variations.find((v) => v.id === selectedId);
